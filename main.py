@@ -52,7 +52,9 @@ TIMEOUT = 5
 class Action:
     def __init__(self):
         load_dotenv(find_dotenv(), override=True)
-
+        # ServerChan secret key
+        self.secret = os.environ.get('SECRET', '')
+        # qywx config info
         self.corpid = os.environ.get('CORPID', '')
         self.agentid = os.environ.get('AGENTID', '')
         self.thumbmediaid = os.environ.get('THUMBMEDIAID', '')
@@ -256,8 +258,11 @@ class Action:
             self.task_list.append(asyncio.create_task(self.get_fish_trend()))
 
             await asyncio.gather(*self.task_list)
+
+            # 自行修改对应的发送方式
             # await self.servechan()
             await self.qywx()
+
             # print(f'{"".join(self.contents)}')
 
 
