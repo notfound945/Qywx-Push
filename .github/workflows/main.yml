@@ -10,7 +10,7 @@ env:
   TZ: Asia/Shanghai
 
 jobs:
-  ServerChan-Push-News:
+  Qywx-Push-News:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
