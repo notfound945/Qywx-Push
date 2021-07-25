@@ -1,0 +1,41 @@
+name: 'Qywx Push News'
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  watch:
+    types: [started]
+
+env:
+  TZ: Asia/Shanghai
+
+jobs:
+  ServerChan-Push-News:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: 'Set up Python'
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: 'Install dependencies'
+        run: python -m pip install --upgrade pip
+      - name: 'Install requirements'
+        run: pip install -r ./requirements.txt
+      - name: 'Working'
+        env:
+          SECRET: ${{ secrets.SECRET }}
+          CORPID: ${{ secrets.CORPID }}
+          AGENTID: ${{ secrets.AGENTID }}
+          THUMBMEDIAID: ${{ secrets.THUMBMEDIAID }}
+          CORPSECRET: ${{ secrets.CORPSECRET }}
+        timeout-minutes: 350
+        run: |
+          echo SECRET=$SECRET > .env
+          echo CORPID=$CORPID >> .env
+          echo AGENTID=$AGENTID >> .env
+          echo THUMBMEDIAID=$THUMBMEDIAID >> .env
+          echo CORPSECRET=$CORPSECRET >> .env
+          python main.py
+          rm -f .env
