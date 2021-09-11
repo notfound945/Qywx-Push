@@ -2,7 +2,7 @@ name: 'Qywx Push News'
 
 on:
   schedule:
-    - cron: '30 4,14 * * *'
+    - cron: '30 4 * * *'
   watch:
     types: [started]
 
